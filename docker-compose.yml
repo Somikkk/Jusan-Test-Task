@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  weather-microservice:
+    image: weather-microservice:latest
+    container_name: weather-microservice
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://weather-db:5432/weather
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      WEATHERAPI_APIKEY: 39ad3f9e7597431ba9485452242911
+    depends_on:
+      - weather-db
+
+  weather-db:
+    image: postgres:14.15
+    container_name: weather-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: weather
+    volumes:
+      - weather-data:/var/lib/postgresql/data
+
+volumes:
+  weather-data:

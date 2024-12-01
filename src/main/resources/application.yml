@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/weatherdb
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  application:
+    name: weather-microservice
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  weather-api:
+    url: https://api.weatherapi.com/v1
+
+weatherapi:
+  apiKey: 39ad3f9e7597431ba9485452242911
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    feign: DEBUG
+
+server:
+  port: 8080
+
